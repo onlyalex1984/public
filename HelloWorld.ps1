@@ -1,16 +1,21 @@
 # Function to display a console-based loading bar
 function Show-LoadingBar {
+
     param (
         [int]$duration = 5,
         [int]$totalWidth = 30
     )
     
     $stepDuration = $duration / $totalWidth
+    $colors = [System.ConsoleColor]::Green, [System.ConsoleColor]::Yellow, [System.ConsoleColor]::Blue,
+              [System.ConsoleColor]::Red, [System.ConsoleColor]::Cyan, [System.ConsoleColor]::Magenta,
+              [System.ConsoleColor]::Gray, [System.ConsoleColor]::White
     Write-Host -NoNewline "Loading: ["
 
     for ($i = 0; $i -lt $totalWidth; $i++) {
         Start-Sleep -Milliseconds ($stepDuration * 1000)
-        Write-Host -NoNewline "=" -ForegroundColor Cyan
+        $currentColor = $colors[$i % $colors.Length]
+        Write-Host -NoNewline "=" -ForegroundColor $currentColor
     }
 
     Write-Host "] Done!" -ForegroundColor Green
